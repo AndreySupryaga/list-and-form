@@ -2,91 +2,93 @@
     <div class="loader-container" ng-show="loader">
         <div class="loader"></div>
     </div>
-
-    <div class="jumbotron text-center ">
-        <div class="container" style="position: relative;">
-            <div class="row">
-                <div class="pull-right">
-                    <ul uib-pagination
-                        total-items="pagesLength"
-                        items-per-page="limit"
-                        ng-model="currentPage"
-                        max-size="maxSize"
-                        class="pagination-sm"
-                        boundary-links="true">
-                    </ul>
-                </div>
-                <div class="pull-right" style="padding: 20px 15px">
-                    <select ng-model="limit" class="form-control">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="all">all</option>
-                    </select>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="pull-right">
+                <ul uib-pagination
+                    total-items="pagesLength"
+                    items-per-page="limit"
+                    ng-model="currentPage"
+                    max-size="maxSize"
+                    class="pagination-sm"
+                    boundary-links="true">
+                </ul>
+            </div>
+            <div class="pull-right limit-select">
+                <select ng-model="limit" class="form-control">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="all">all</option>
+                </select>
             </div>
         </div>
+    </div>
 
-        <div class="container">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th ng-click="sortType = 'firstName'; sortReverse = !sortReverse">
-                        First Name
-                        <span ng-show="sortType == 'firstName' && !sortReverse">+</span>
-                        <span ng-show="sortType == 'firstName' && sortReverse">-</span>
-                    </th>
-                    <th ng-click="sortType = 'lastName'; sortReverse = !sortReverse">
-                        Last Name
-                        <span ng-show="sortType == 'lastName' && !sortReverse">+</span>
-                        <span ng-show="sortType == 'lastName' && sortReverse">-</span>
-                    </th>
-                    <th ng-click="sortType = 'email'; sortReverse = !sortReverse">
-                        Email
-                        <span ng-show="sortType == 'email' && !sortReverse">+</span>
-                        <span ng-show="sortType == 'email' && sortReverse">-</span>
-                    </th>
-                    <th ng-click="sortType = 'age'; sortReverse = !sortReverse">
-                        Age
-                        <span ng-show="sortType == 'age' && !sortReverse">+</span>
-                        <span ng-show="sortType == 'age' && sortReverse">-</span>
-                    </th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input ng-model="searchTerm.firstName" class="form-control"/></td>
-                    <td><input ng-model="searchTerm.lastName" class="form-control"/></td>
-                    <td><input ng-model="searchTerm.email" class="form-control"/></td>
-                    <td style="width: 120px;">
-                        <select ng-model="ageRange" class="form-control">
-                            <option value="10-20">10-20</option>
-                            <option value="21-30">21-30</option>
-                            <option value="31-40">31-40</option>
-                            <option value="40+">40+</option>
-                            <option value="all">all</option>
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="container">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th ng-click="sortType = 'firstName'; sortReverse = !sortReverse">
+                    First Name
+                    <span ng-show="sortType == 'firstName' && !sortReverse">+</span>
+                    <span ng-show="sortType == 'firstName' && sortReverse">-</span>
+                </th>
+                <th ng-click="sortType = 'lastName'; sortReverse = !sortReverse">
+                    Last Name
+                    <span ng-show="sortType == 'lastName' && !sortReverse">+</span>
+                    <span ng-show="sortType == 'lastName' && sortReverse">-</span>
+                </th>
+                <th ng-click="sortType = 'email'; sortReverse = !sortReverse">
+                    Email
+                    <span ng-show="sortType == 'email' && !sortReverse">+</span>
+                    <span ng-show="sortType == 'email' && sortReverse">-</span>
+                </th>
+                <th ng-click="sortType = 'age'; sortReverse = !sortReverse">
+                    Age
+                    <span ng-show="sortType == 'age' && !sortReverse">+</span>
+                    <span ng-show="sortType == 'age' && sortReverse">-</span>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input ng-model="searchTerm.firstName" class="form-control"/></td>
+                <td><input ng-model="searchTerm.lastName" class="form-control"/></td>
+                <td><input ng-model="searchTerm.email" class="form-control"/></td>
+                <td style="width: 120px;">
+                    <select ng-model="ageRange" class="form-control">
+                        <option value="10-20">10-20</option>
+                        <option value="21-30">21-30</option>
+                        <option value="31-40">31-40</option>
+                        <option value="40+">40+</option>
+                        <option value="all">all</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-md-4" ng-repeat="user in userList track by $index">
-                    <div class="thumbnail">
-                        <img src="#" alt="...">
-                        <div class="caption">
-                            <h3><a ng-href="/user/edit/{{::user.id}}">{{user.firstName + ' ' + user.lastName}}</a></h3>
-                            <p>{{user.email}}</p>
-                            <p>{{user.age}}</p>
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 col-md-3" ng-repeat="user in userList track by $index">
+                <div class="thumbnail">
+                    <img src="#" alt="...">
+                    <div class="caption">
+                        <h3><a ng-href="/#/user/edit/{{::user.id}}">{{user.firstName}} <br/> {{user.lastName}}</a></h3>
+                        <p>{{::user.email}}</p>
+                        <p>{{::user.age}}</p>
+                        <p>
+                            <a ng-href="/#/user/edit/{{::user.id}}" class="btn btn-primary" role="button">Edit</a>
+                            <button ng-click="userDelete(user)" class="btn btn-danger"role="button">Delete</button>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--</div>-->
 </div>

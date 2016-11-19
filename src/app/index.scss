@@ -12,6 +12,18 @@ $icon-font-path: "../fonts/";
 // bower:scss
 // endbower
 
+body {
+  padding-top: 70px;
+  background-color: #eeeeee;
+}
+
+.limit-select{
+  padding: 20px 15px;
+
+  select{
+    height: 30px;
+  }
+}
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -24,7 +36,7 @@ $icon-font-path: "../fonts/";
   min-height: 100vh;
 }
 
-.margin-0{
+.margin-0 {
   margin: 0;
 }
 
@@ -83,7 +95,6 @@ $icon-font-path: "../fonts/";
     transform: rotate(360deg);
   }
 }
-
 
 /**
  *  Do not remove the comments below. It's the markers used by gulp-inject to inject
