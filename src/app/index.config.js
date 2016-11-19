@@ -8,10 +8,10 @@
     /** @ngInject */
     function config(toastrConfig, $uibTooltipProvider, $locationProvider) {
 
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });
+//        $locationProvider.html5Mode({
+//            enabled: true,
+//            requireBase: false
+//        });
         // Set options third-party lib
         $uibTooltipProvider.options({popupDelay: 400});
         toastrConfig.allowHtml = true;
