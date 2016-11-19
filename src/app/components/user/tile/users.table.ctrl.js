@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('userGridCtrl', MainController);
+        .controller('usersTableCtrl', MainController);
 
     function MainController($scope, $http, toastr, $filter, confirmDialog, userEditDialog) {
 

@@ -1,15 +1,15 @@
 (function () {
-    "use strict";
+    'use strict';
 
     angular.module('app')
         .config(function ($routeProvider) {
             $routeProvider
-                .when("/", {
-                    templateUrl: "app/components/user/user.grid.html",
-                    controller: "userGridCtrl"
+                .when('/table', {
+                    templateUrl: '/app/components/user/tile/users.table.html',
+                    controller: 'usersTableCtrl'
                 })
                 .otherwise({
-                    redirectTo: '/'
+                    redirectTo: '/table'
                 });
         });
 })();
