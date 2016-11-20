@@ -25,6 +25,7 @@
                 if(data[i].id == id) return data[i];
             }
         }
+
         /**
          * Edit select user in dialog window
          * @param {Object} user - User data
