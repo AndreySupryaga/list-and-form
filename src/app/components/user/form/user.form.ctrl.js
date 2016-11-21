@@ -5,34 +5,59 @@
         .module('app')
         .controller('userFormCtrl', MainController);
 
-    function MainController($scope, $route, $window, users, toastr, confirmDialog) {
+    function MainController($scope, $route, $window, $location, usersApi, toastr, confirmDialog) {
 
-        var userModelCashe = null;
+        var userModelCache = null;
         $scope.users = [];
-        $scope.userModel = null;
+        $scope.userModel = {};
+        $scope.userAdd = userAdd;
         $scope.userEdit = userEdit;
         $scope.userDelete = userDelete;
         $scope.resetChanges = resetChanges;
         $scope.cancelForm = cancelForm;
 
 
+        init();
+        
+        function init() {
+            if($route.current.params.id){
+                $scope.userId = $route.current.params.id;
+                $scope.formTitle = 'Edit user';
+                getUsersData();
+            }else{
+                $scope.formTitle = 'Add user';
+                $scope.loader = false;
+            }
+        }
         /**
          * Getting users data
          */
-        users.get($route.current.params.id).then(function (response) {
-            $scope.userModel = response;
-            userModelCashe = angular.copy($scope.userModel);
-            $scope.loader = false;
-        });
+        function getUsersData() {
+            return usersApi.get($scope.userId).then(function (response) {
+                $scope.userModel = response;
+                userModelCache = angular.copy($scope.userModel);
+                $scope.loader = false;
+            });
+        }
 
 
         /**
-         * Edit select user in dialog window
+         * Save select user in dialog window
          * @param {Object} user - User data
          */
         function userEdit(user) {
-            users.put(user).then(function (response) {
-                $scope.userModel = response;
+            usersApi.put(user).then(function (response) {
+               $scope.userModel = response;
+            });
+        }
+        
+        /**
+         * Save select user in dialog window
+         * @param {Object} user - User data
+         */
+        function userAdd(user) {
+            usersApi.post(user).then(function (response) {
+                $location.path('/user/edit/' + response.id);
             });
         }
         
@@ -45,14 +70,14 @@
             var descr = 'You really want to delete ' + user.firstName + ' ' + user.lastName;
             confirmDialog(title, descr)
                 .then(function () {
-                    users.del(user.id);
+                    usersApi.del(user.id);
                     toastr.success('Deleted', 'Success');
                     $window.history.back();
                 });
         }
 
         function resetChanges() {
-            $scope.userModel = userModelCashe;
+            $scope.userModel = userModelCache;
         }
 
         function cancelForm() {

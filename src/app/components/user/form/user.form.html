@@ -8,10 +8,10 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Edit user</h3>
+                    <h3 class="panel-title">{{::formTitle}}</h3>
                 </div>
                 <div class="panel-body">
-                    <form ng-submit="userEdit(userModel)" class="form-horizontal">
+                    <form class="form-horizontal">
                         <div class="form-group">
                             <label for="firstName" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
@@ -48,11 +48,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button ng-click="userDelete(userModel)" type="button" class="btn btn-danger">Delete</button>
-                            <button type="submit" class="btn btn-success">Save changes</button>
-                            <button ng-click="resetChanges()" type="button" class="btn btn-warning">Reset changes</button>
+                            <span ng-if="userId">
+                                <button ng-click="userDelete(userModel)" type="button" class="btn btn-danger">Delete</button>
+                                <button ng-click="userEdit(userModel)" class="btn btn-success">Save changes</button>
+                                <button ng-click="resetChanges()" type="button" class="btn btn-warning">Reset changes</button>
+                            </span>
+                            <button ng-if="!userId" ng-click="userAdd(userModel)" type="button" class="btn btn-success">Save changes</button>
                             <button ng-click="cancelForm()" type="button" class="btn bt n-default">Cancel</button>
-
                         </div>
                     </form>
                 </div>
