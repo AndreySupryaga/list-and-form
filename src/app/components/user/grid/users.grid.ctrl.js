@@ -3,45 +3,34 @@
 
     angular
         .module('app')
-        .controller('usersTileCtrl', MainController);
+        .controller('usersGridCtrl', MainController);
 
-    function MainController($scope, toastr, $filter, users, confirmDialog, userEditDialog) {
+    function MainController($scope, $filter, usersApi, confirmDialog) {
 
         $scope.limit = '10';
         $scope.currentPage = '1';
         $scope.ageRange = 'all';
         $scope.userModel = [];
-        $scope.userEdit = userEdit;
         $scope.userDelete = userDelete;
 
         /**
          * Getting users data
          */
-        users.getAll().then(function (response) {
+
+
+        usersApi.getAll().then(function (response) {
             $scope.userModel = response;
             filterUserList();
             $scope.loader = false;
         });
+
         /**
          * Watch for filter data
          */
         $scope.$watch('[currentPage, limit, sortReverse, searchTerm, ageRange]', function () {
             filterUserList();
         }, true);
-
-        /**
-         * Edit select user in dialog window
-         * @param {Object} user - User data
-         */
-        function userEdit(user) {
-            userEditDialog(user).then(function (changedModel) {
-                if (changedModel) {
-                    angular.extend(user, changedModel);
-                    toastr.success('Edited', 'Success');
-                }
-            });
-        }
-
+        
         /**
          * Delete select user in dialog window
          * @param {Object} user - User data
@@ -51,15 +40,13 @@
             var descr = 'You really want to delete ' + user.firstName + ' ' + user.lastName;
             confirmDialog(title, descr)
                 .then(function () {
-                    users.del(user.id).then(function (response) {
+                    usersApi.del(user.id).then(function (response) {
                         $scope.userModel = response;
                         filterUserList();
-                        toastr.success('Deleted', 'Success');
                     });
                 });
         }
-
-
+        
         /**
          * Filter for users
          * @returns {Array} {*} - Array with filtered user
