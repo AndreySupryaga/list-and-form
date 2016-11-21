@@ -5,7 +5,7 @@
         .module('app')
         .controller('usersTableCtrl', MainController);
 
-    function MainController($scope, $http, toastr, $filter, confirmDialog, userEditDialog) {
+    function MainController($scope, toastr, $filter, users, confirmDialog, userEditDialog) {
 
         $scope.limit = '10';
         $scope.currentPage = '1';
@@ -17,11 +17,14 @@
         /**
          * Getting users data
          */
-        $http.get('app/userList.json').then(function (response) {
-            $scope.userModel = response.data;
+
+
+        users.getAll().then(function (response) {
+            $scope.userModel = response;
             filterUserList();
             $scope.loader = false;
         });
+
         /**
          * Watch for filter data
          */
@@ -51,12 +54,14 @@
             var descr = 'You really want to delete ' + user.firstName + ' ' + user.lastName;
             confirmDialog(title, descr)
                 .then(function () {
-                    modelDeleteItem(user);
-                    filterUserList();
-                    toastr.success('Deleted', 'Success');
+                    users.del(user.id).then(function (response) {
+                        $scope.userModel = response;
+                        filterUserList();
+                        toastr.success('Deleted', 'Success');
+                    });
                 });
         }
-        
+
 
         /**
          * Filter for users
@@ -72,14 +77,9 @@
             filteredData = $filter('filter')(filteredData, $scope.searchTerm);
             filteredData = $filter('orderBy')(filteredData, $scope.sortType, $scope.sortReverse);
             $scope.pagesLength = filteredData.length;
-            filteredData = $filter('limitTo')(filteredData, $scope.limit, $scope.currentPage===1 ? 0 : ($scope.currentPage - 1) * $scope.limit);
+            filteredData = $filter('limitTo')(filteredData, $scope.limit, $scope.currentPage === 1 ? 0 : ($scope.currentPage - 1) * $scope.limit);
             $scope.userList = filteredData;
             return $scope.userList;
-        }
-
-        function modelDeleteItem(item) {
-            $scope.userModel.splice($scope.userModel.indexOf(item), 1);
-
         }
 
     }

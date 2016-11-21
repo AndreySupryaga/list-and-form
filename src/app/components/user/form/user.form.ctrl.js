@@ -5,35 +5,37 @@
         .module('app')
         .controller('userFormCtrl', MainController);
 
-    function MainController($scope, $http, $route, toastr, confirmDialog) {
+    function MainController($scope, $route, $window, users, toastr, confirmDialog) {
 
-        $scope.userModel = [];
+        var userModelCashe = null;
+        $scope.users = [];
+        $scope.userModel = null;
         $scope.userEdit = userEdit;
         $scope.userDelete = userDelete;
+        $scope.resetChanges = resetChanges;
+        $scope.cancelForm = cancelForm;
+
 
         /**
          * Getting users data
          */
-
-        $http.get('app/userList.json').then(function (response) {
-            $scope.userModel = getUser(response.data, $route.current.params.id);
+        users.get($route.current.params.id).then(function (response) {
+            $scope.userModel = response;
+            userModelCashe = angular.copy($scope.userModel);
             $scope.loader = false;
         });
 
-        function getUser(data, id){
-            for(var i = 0; i < data.length; i++){
-                if(data[i].id == id) return data[i];
-            }
-        }
 
         /**
          * Edit select user in dialog window
          * @param {Object} user - User data
          */
         function userEdit(user) {
-           console.log('userEdit ', user);
+            users.put(user).then(function (response) {
+                $scope.userModel = response;
+            });
         }
-
+        
         /**
          * Delete select user in dialog window
          * @param {Object} user - User data
@@ -43,15 +45,18 @@
             var descr = 'You really want to delete ' + user.firstName + ' ' + user.lastName;
             confirmDialog(title, descr)
                 .then(function () {
-                    modelDeleteItem(user);
-                    filterUserList();
+                    users.del(user.id);
                     toastr.success('Deleted', 'Success');
+                    $window.history.back();
                 });
         }
 
-        function modelDeleteItem(item) {
-            $scope.userModel.splice($scope.userModel.indexOf(item), 1);
+        function resetChanges() {
+            $scope.userModel = userModelCashe;
+        }
 
+        function cancelForm() {
+            $window.history.back();
         }
 
     }
