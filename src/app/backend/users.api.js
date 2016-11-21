@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .service('users', function ($http, $q) {
+        .service('usersApi', function ($http, $q, toastr) {
             return {
 
                 getAll: function () {
@@ -36,6 +36,7 @@
                     users.push(user);
                     putUsers(users);
                     return $q(function (resolve) {
+                        toastr.success('Created new user', 'Success');
                         resolve(user);
                     })
                 },
@@ -44,6 +45,7 @@
                     users[getIndexItem(user.id)] = user;
                     putUsers(users);
                     return $q(function (resolve) {
+                        toastr.success('Updated', 'Success');
                         resolve(user);
                     })
                 },
@@ -53,6 +55,7 @@
                     users.splice(getIndexItem(id), 1);
                     putUsers(users);
                     return $q(function (resolve) {
+                        toastr.success('Deleted', 'Success');
                         resolve(users);
                     })
                 }
