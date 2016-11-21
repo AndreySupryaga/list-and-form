@@ -15,8 +15,7 @@
         $scope.userDelete = userDelete;
         $scope.resetChanges = resetChanges;
         $scope.cancelForm = cancelForm;
-
-
+        
         init();
         
         function init() {
@@ -29,8 +28,9 @@
                 $scope.loader = false;
             }
         }
+        
         /**
-         * Getting users data
+         * Getting users data by id
          */
         function getUsersData() {
             return usersApi.get($scope.userId).then(function (response) {
@@ -42,7 +42,7 @@
 
 
         /**
-         * Save select user in dialog window
+         * Save user
          * @param {Object} user - User data
          */
         function userEdit(user) {
@@ -52,7 +52,7 @@
         }
         
         /**
-         * Save select user in dialog window
+         * Add new user to users data
          * @param {Object} user - User data
          */
         function userAdd(user) {
@@ -62,7 +62,7 @@
         }
         
         /**
-         * Delete select user in dialog window
+         * Delete select user with confirm dialog
          * @param {Object} user - User data
          */
         function userDelete(user) {
@@ -75,10 +75,16 @@
                 });
         }
 
+        /**
+         * Reset changes
+         */
         function resetChanges() {
             $scope.userModel = userModelCache;
         }
 
+        /**
+         * Exit from form
+         */
         function cancelForm() {
             $window.history.back();
         }

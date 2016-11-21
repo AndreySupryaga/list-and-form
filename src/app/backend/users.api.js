@@ -6,6 +6,10 @@
         .service('usersApi', function ($http, $q, toastr) {
             return {
 
+                /**
+                 * Getting all users data
+                 * @returns {Promise}
+                 */
                 getAll: function () {
                     if (getUsers()) {
                         return $q(function (resolve) {
@@ -18,6 +22,11 @@
                         });
                     }
                 },
+
+                /**
+                 * Getting user by id
+                 * @returns {Promise}
+                 */
                 get: function (id) {
                     var that = this;
                     return $q(function (resolve) {
@@ -30,6 +39,11 @@
                         }
                     })
                 },
+
+                /**
+                 * Creating new user
+                 * @returns {Promise}
+                 */
                 post: function (user) {
                     var users = getUsers();
                     user.id = getMaxId(users) + 1;
@@ -40,6 +54,11 @@
                         resolve(user);
                     })
                 },
+
+                /**
+                 * Changing user
+                 * @returns {Promise}
+                 */
                 put: function (user) {
                     var users = getUsers();
                     users[getIndexItem(user.id)] = user;
@@ -49,6 +68,11 @@
                         resolve(user);
                     })
                 },
+
+                /**
+                 * Deleting user
+                 * @returns {Promise}
+                 */
                 del: function (id) {
                     getIndexItem(id);
                     var users = getUsers();
@@ -59,9 +83,8 @@
                         resolve(users);
                     })
                 }
-
+                
             };
-
 
             function getUsers() {
                 return JSON.parse(localStorage.getItem('usersModel'));
@@ -85,6 +108,7 @@
                     }
                 }
             }
+
             function getMaxId(data) {
                 var maxId = 0;
                 for(var i = 0; i < data.length; i++){
