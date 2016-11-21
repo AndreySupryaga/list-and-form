@@ -30,6 +30,15 @@
                         }
                     })
                 },
+                post: function (user) {
+                    var users = getUsers();
+                    user.id = getMaxId(users) + 1;
+                    users.push(user);
+                    putUsers(users);
+                    return $q(function (resolve) {
+                        resolve(user);
+                    })
+                },
                 put: function (user) {
                     var users = getUsers();
                     users[getIndexItem(user.id)] = user;
@@ -57,7 +66,7 @@
 
             function putUsers(data) {
                 localStorage.setItem('usersModel', JSON.stringify(data));
-                return JSON.parse(localStorage.getItem('usersModel'));
+                return getUsers();
             }
 
             function getUserById(id) {
@@ -72,6 +81,15 @@
                        return i;
                     }
                 }
+            }
+            function getMaxId(data) {
+                var maxId = 0;
+                for(var i = 0; i < data.length; i++){
+                    if(maxId < data[i].id){
+                        maxId = data[i].id
+                    }
+                }
+                return maxId;
             }
         });
 
