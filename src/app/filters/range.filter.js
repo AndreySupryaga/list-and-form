@@ -1,6 +1,13 @@
 (function () {
     'use strict';
 
+    /**
+     * Range filter for age.
+     * @param items {Array}
+     * @param min {Number}
+     * @param max {Number}
+     * @returns {function}
+     */
     angular.module('app')
         .filter('rangeFilter', function () {
             return function (items, min, max) {
