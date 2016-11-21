@@ -11,49 +11,55 @@
                     <h3 class="panel-title">{{::formTitle}}</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" name="userForm">
                         <div class="form-group">
                             <label for="firstName" class="col-sm-4 control-label">First Name</label>
                             <div class="col-sm-8">
-                                <input ng-model="userModel.firstName" class="form-control" id="firstName"
-                                       placeholder="First Name">
+                                <input ng-model="userModel.firstName"  name="firstName" class="form-control" id="firstName"
+                                       placeholder="First Name" required>
+                                <div ng-messages="userForm.firstName.$error" ng-if="userForm.firstName.$dirty">
+                                    <div ng-message="required">This field is required</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="lastName" class="col-sm-4 control-label">Last Name</label>
                             <div class="col-sm-8">
-                                <input ng-model="userModel.lastName" class="form-control" id="lastName"
-                                       placeholder="Last Name">
+                                <input ng-model="userModel.lastName" name="lastName" class="form-control" id="lastName"
+                                       placeholder="Last Name" required>
+                                <div ng-messages="userForm.lastName.$error" ng-if="userForm.lastName.$dirty">
+                                    <div ng-message="required">This field is required</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Email address</label>
                             <div class="col-sm-8">
-                                <input ng-model="userModel.email" type="email" class="form-control" id="email"
-                                       placeholder="Email address">
+                                <input ng-model="userModel.email" name="email" type="email" class="form-control" id="email"
+                                       placeholder="Email address" required>
+                                <div ng-messages="userForm.email.$error" ng-if="userForm.email.$dirty">
+                                    <div ng-message="required">This field is required</div>
+                                    <div ng-message="email">Your email address is invalid</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="age" class="col-sm-4 control-label">Age</label>
                             <div class="col-sm-8">
-                                <input ng-model="userModel.age" type="number" class="form-control" id="age"
-                                       placeholder="Age">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="file">File input</label>
-
-                            <div class="col-sm-8">
-                                <input type="file" id="file" ng-model="userModel.file">
+                                <input ng-model="userModel.age" name="age" type="number" class="form-control" id="age"
+                                       placeholder="Age" required>
+                                <div ng-messages="userForm.age.$error" ng-if="userForm.age.$dirty">
+                                    <div ng-message="required">This field is required</div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <span ng-if="userId">
                                 <button ng-click="userDelete(userModel)" type="button" class="btn btn-danger">Delete</button>
-                                <button ng-click="userEdit(userModel)" class="btn btn-success">Save changes</button>
-                                <button ng-click="resetChanges()" type="button" class="btn btn-warning">Reset changes</button>
+                                <button ng-click="userEdit(userModel)" ng-disabled="userForm.$invalid || userForm.$pristine" class="btn btn-success">Save changes</button>
+                                <button ng-click="resetChanges()" ng-disabled="userForm.$invalid || userForm.$pristine" type="button" class="btn btn-warning">Reset changes</button>
                             </span>
-                            <button ng-if="!userId" ng-click="userAdd(userModel)" type="button" class="btn btn-success">Save changes</button>
+                            <button ng-if="!userId" ng-click="userAdd(userModel)" ng-disabled="userForm.$invalid || userForm.$pristine" type="button" class="btn btn-success">Save changes</button>
                             <button ng-click="cancelForm()" type="button" class="btn bt n-default">Cancel</button>
                         </div>
                     </form>

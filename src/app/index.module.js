@@ -6,7 +6,8 @@
             'ngAnimate',
             'ui.bootstrap',
             'ngRoute',
-            'toastr'
+            'toastr',
+            'ngMessages'
         ]);
 
 })();

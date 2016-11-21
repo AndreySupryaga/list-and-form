@@ -5,7 +5,7 @@
         .module('app')
         .controller('userFormCtrl', MainController);
 
-    function MainController($scope, $route, $window, $location, usersApi, toastr, confirmDialog) {
+    function MainController($scope, $route, $window, $location, usersApi, confirmDialog) {
 
         var userModelCache = null;
         $scope.users = [];
@@ -71,7 +71,6 @@
             confirmDialog(title, descr)
                 .then(function () {
                     usersApi.del(user.id);
-                    toastr.success('Deleted', 'Success');
                     $window.history.back();
                 });
         }

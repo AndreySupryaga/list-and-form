@@ -45,6 +45,10 @@ body {
     color: rgba(50, 14, 255, 0.95) !important;
   }
 }
+
+input + .ng-active{
+  color: #FF2A00;
+}
 .loader,
 .loader:after {
 
