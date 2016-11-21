@@ -15,20 +15,20 @@
         $scope.userDelete = userDelete;
         $scope.resetChanges = resetChanges;
         $scope.cancelForm = cancelForm;
-        
+
         init();
-        
+
         function init() {
-            if($route.current.params.id){
+            if ($route.current.params.id) {
                 $scope.userId = $route.current.params.id;
                 $scope.formTitle = 'Edit user';
                 getUsersData();
-            }else{
+            } else {
                 $scope.formTitle = 'Add user';
                 $scope.loader = false;
             }
         }
-        
+
         /**
          * Getting users data by id
          */
@@ -47,10 +47,12 @@
          */
         function userEdit(user) {
             usersApi.put(user).then(function (response) {
-               $scope.userModel = response;
+                $scope.userModel = response;
+                userModelCache = angular.copy($scope.userModel);
+                $scope.userForm.$setPristine();
             });
         }
-        
+
         /**
          * Add new user to users data
          * @param {Object} user - User data
@@ -60,7 +62,7 @@
                 $location.path('/user/edit/' + response.id);
             });
         }
-        
+
         /**
          * Delete select user with confirm dialog
          * @param {Object} user - User data
