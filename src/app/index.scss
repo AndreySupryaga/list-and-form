@@ -40,6 +40,11 @@ body {
   margin: 0;
 }
 
+.navbar-nav {
+  .active{
+    color: rgba(50, 14, 255, 0.95) !important;
+  }
+}
 .loader,
 .loader:after {
 

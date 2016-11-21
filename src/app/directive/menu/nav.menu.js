@@ -9,14 +9,26 @@
                     $scope.isNavCollapsed = true;
                     $scope.isCollapsed = false;
                     $scope.isCollapsedHorizontal = false;
-                   // $scope.menuItems = config.navigation.main;
                     $scope.currentPath = $location.path();
                     $scope.selectSection = function (path) {
                         $scope.currentPath = path;
                     };
-                    $scope.action = function (item) {
-                        $location.url(item.href);
-                    };
+                    $scope.currentPath = '/#' + $location.path();
+                    
+                    $scope.links = [
+                        {
+                            title: 'Item table view',
+                            href: '/#/users/table'
+                        },
+                        {
+                            title: 'Item tile view',
+                            href: '/#/users/tile'
+                        },
+                        {
+                            title: 'Add user',
+                            href: '/#/user/add'
+                        }
+                    ];
                 },
                 restrict: 'AE',
                 templateUrl: 'app/directive/menu/nav.menu.html'
